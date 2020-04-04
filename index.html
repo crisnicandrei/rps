@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Page title
+
+        </title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <script>
+            let playerScore=0
+            let computerScore=0
+            let roundNumber=0
+
+
+
+          //Computer random
+          function computerPlay()
+           {
+               let choices=["Rock","Paper","Scissors"]
+               let roboChoice= choices[Math.floor(Math.random()*choices.length)]
+               return roboChoice
+
+           } 
+
+           //Player choice
+           function player()
+           {
+               let playerChoice=prompt("Rock,Paper or scissors?").toLowerCase()
+               if((playerChoice!="rock")&&(playerChoice!="paper")&&(playerChoice!="scissors"))
+               {
+                   alert("Wrong input try again!")
+                   playerChoice=prompt("Rock,Paper or scissors?").toLowerCase()
+
+               }
+               return playerChoice
+           }
+
+
+
+           
+
+
+
+
+
+           
+           function playRound()
+           {
+            let computerSelection=computerPlay()
+            let playerSelection=player()
+            if((playerSelection=="rock"&&computerSelection=="Scissors")||(playerSelection=="paper"&&computerSelection=="Rock")||(playerSelection=="scissors"&&computerSelection=="Paper"))
+                {
+                    return "You win! "+playerSelection+" beats "+computerSelection
+                    playerScore++
+
+                }
+                else if((playerSelection=="rock"&&computerSelection=="Paper")||(playerSelection=="paper"&&computerSelection=="Scissors")||(playerSelection=="scissors"&&computerSelection=="Rock"))
+                {
+                    return "You lose! "+computerSelection+ " beats "+playerSelection
+                    computerScore++
+
+                }
+                else if(playerSelection==computerSelection.toLowerCase())
+                {
+                    return "It`s a draw!"
+                }
+                
+
+            }
+            function game()
+            {
+                
+               
+                
+                while(roundNumber<5)
+                {
+                    let result=playRound()
+                    if (result.includes("draw")) {
+                        console.log("This round is a Draw.");
+                        
+                    } else if (result.includes("win")) {
+                        console.log(`${result}. Player wins this round.`);
+                        playerScore += 1;
+                    } else if (result.includes("lose")) {
+                        console.log(`${result}. Computer wins this round.`);
+                        computerScore += 1;
+                    }roundNumber++
+                    
+
+                }
+                if(playerScore>computerScore)
+                {
+                    console.log("You won!")
+
+                }
+                else if(playerScore<computerScore)
+                {
+                    console.log("You lost!")
+                }
+                
+            }
+            game()
+        
+
+
+        </script>
+    </body>
+</html>
