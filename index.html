@@ -5,13 +5,44 @@
             Page title
 
         </title>
+        <link rel="stylesheet" href="style.css">
         <meta charset="UTF-8"/>
     </head>
     <body>
+        <div class="content">
+            <div class="player">Your score :<span id="PlayerScore"></span></div>
+            <div class="computer">Computer`s score:<span id="ComputerScore"></span></div>
+            <button class="buttonRock">Rock</button>
+            <button class="buttonPaper">Paper</button>
+            <button class="buttonScissors">Scissors</button>
+            <div id="BigResult"></div>
+            <div id="finalResult"></div>
+        </div>
         <script>
+
+            
+            const resultContainer=document.querySelector("#BigResult");
+            const finalResult=document.querySelector("#finalResult");
+            let roundsPlayed=0;
+            let playerSelection="";
+            const buttons=document.querySelectorAll(`button`);
+
+            buttons.forEach((button)=>
+            {
+                button.addEventListener('click',(e)=>{
+                playerSelection=button.textContent.toLowerCase();
+                computerSelection=computerPlay();
+                console.log(playerSelection,computerSelection);
+                playRound();
+                roundsPlayed++;
+                
+                
+            });
+            });
+
             let playerScore=0
             let computerScore=0
-            let roundNumber=0
+            
 
 
 
@@ -25,17 +56,7 @@
            } 
 
            //Player choice
-           function player()
-           {
-               let playerChoice=prompt("Rock,Paper or scissors?").toLowerCase()
-               if((playerChoice!="rock")&&(playerChoice!="paper")&&(playerChoice!="scissors"))
-               {
-                   alert("Wrong input try again!")
-                   playerChoice=prompt("Rock,Paper or scissors?").toLowerCase()
-
-               }
-               return playerChoice
-           }
+           
 
 
 
@@ -48,60 +69,92 @@
            
            function playRound()
            {
-            let computerSelection=computerPlay()
-            let playerSelection=player()
-            if((playerSelection=="rock"&&computerSelection=="Scissors")||(playerSelection=="paper"&&computerSelection=="Rock")||(playerSelection=="scissors"&&computerSelection=="Paper"))
+            
+            const result = document.createElement('div');
+            
+            if(roundsPlayed<=4)
+            {
+                if((playerSelection=="rock"&&computerSelection=="Scissors")||(playerSelection=="paper"&&computerSelection=="Rock")||(playerSelection=="scissors"&&computerSelection=="Paper"))
                 {
-                    return "You win! "+playerSelection+" beats "+computerSelection
+                    const resultPlayer=document.createElement('div');
+                    resultPlayer.textContent="You win this round!";
+                    resultContainer.appendChild(resultPlayer);
+                    
                     playerScore++
+                    
+                    document.getElementById('PlayerScore').textContent=playerScore;
 
                 }
                 else if((playerSelection=="rock"&&computerSelection=="Paper")||(playerSelection=="paper"&&computerSelection=="Scissors")||(playerSelection=="scissors"&&computerSelection=="Rock"))
                 {
-                    return "You lose! "+computerSelection+ " beats "+playerSelection
+                    const resultComputer=document.createElement('div');
+                    resultComputer.textContent="Computer wins this round!"
+                    resultContainer.appendChild(resultComputer);
+                    
                     computerScore++
+                    document.getElementById('ComputerScore').textContent=computerScore;
+
 
                 }
                 else if(playerSelection==computerSelection.toLowerCase())
                 {
-                    return "It`s a draw!"
+                    const resultDraw=document.createElement('div');
+                    resultDraw.textContent="This round is a draw!";
+                    resultContainer.appendChild(resultDraw);
+                    
                 }
                 
 
             }
-            function game()
+            else if(roundsPlayed>=4)
             {
-                
-               
-                
-                while(roundNumber<5)
-                {
-                    let result=playRound()
-                    if (result.includes("draw")) {
-                        console.log("This round is a Draw.");
-                        
-                    } else if (result.includes("win")) {
-                        console.log(`${result}. Player wins this round.`);
-                        playerScore += 1;
-                    } else if (result.includes("lose")) {
-                        console.log(`${result}. Computer wins this round.`);
-                        computerScore += 1;
-                    }roundNumber++
-                    
-
-                }
                 if(playerScore>computerScore)
                 {
-                    console.log("You won!")
-
+                    finalResult.textContent="You win with "+playerScore+" points!";
                 }
                 else if(playerScore<computerScore)
                 {
-                    console.log("You lost!")
+                    finalResult.textContent="You lost !"
                 }
-                
+                else
+                {
+                    finalResult.textContent="DRAW!";
+                }
             }
-            game()
+        }
+            // function game()
+            // {
+                
+               
+                
+            //     while(roundNumber<5)
+            //     {
+            //         let result=playRound()
+            //         if (result.includes("draw")) {
+            //             console.log("This round is a Draw.");
+                        
+            //         } else if (result.includes("win")) {
+            //             console.log(`${result}. Player wins this round.`);
+            //             playerScore += 1;
+            //         } else if (result.includes("lose")) {
+            //             console.log(`${result}. Computer wins this round.`);
+            //             computerScore += 1;
+            //         }roundNumber++
+                    
+
+            //     }
+            //     if(playerScore>computerScore)
+            //     {
+            //         console.log("You won!")
+
+            //     }
+            //     else if(playerScore<computerScore)
+            //     {
+            //         console.log("You lost!")
+            //     }
+                
+            // }
+            // game()
         
 
 
